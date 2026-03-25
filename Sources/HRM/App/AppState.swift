@@ -11,6 +11,7 @@ final class AppState: ObservableObject {
     private var engine: TapHoldEngine
     private var eventTapManager: EventTapManager?
     private var hasLaunched = false
+    private var inputSourceObserver: Any?
 
     var isEnabled: Bool {
         get { configuration.enabled }
@@ -38,6 +39,15 @@ final class AppState: ObservableObject {
         Task { [weak self] in
             let update = await UpdateChecker.check()
             self?.availableUpdate = update
+        }
+
+        inputSourceObserver = DistributedNotificationCenter.default().addObserver(
+            forName: .init("com.apple.Carbon.TISNotifySelectedKeyboardInputSourceChanged"),
+            object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.objectWillChange.send()
+            }
         }
 
         checkAccessibility()

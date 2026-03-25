@@ -102,6 +102,7 @@ struct KeyBindingDetailView: View {
             }
         }
         .formStyle(.grouped)
+        .fixedSize(horizontal: false, vertical: true)
         }
         .navigationBarBackButtonHidden(true)
         .onChange(of: binding) { onChanged() }

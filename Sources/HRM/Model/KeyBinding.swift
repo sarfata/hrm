@@ -1,7 +1,7 @@
 struct KeyBinding: Codable, Identifiable, Equatable {
-    var id: UInt16 { keyCode }
-    let keyCode: UInt16
-    let label: String
+    var id: String { position.rawValue }
+    var keyCode: UInt16
+    var label: String
     var modifier: Modifier?
     var enabled: Bool
     let position: KeyPosition

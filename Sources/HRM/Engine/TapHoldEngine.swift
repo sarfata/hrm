@@ -13,6 +13,9 @@ final class TapHoldEngine {
     private var buffer = EventBuffer()
     private var config: Configuration
     private var passedThroughKeys: Set<UInt16> = []
+    /// When set, the next keyDown is captured and passed to this handler
+    /// instead of being processed. Used for key reassignment in the UI.
+    var keyCaptureHandler: ((UInt16) -> Void)?
 
     weak var delegate: TapHoldEngineDelegate?
 
@@ -42,6 +45,12 @@ final class TapHoldEngine {
     var syntheticModifierFlags: CGEventFlags = []
 
     func handleKeyDown(keyCode: UInt16, event: CGEvent, timestamp: TimeInterval) -> EventResult {
+        if let handler = keyCaptureHandler {
+            keyCaptureHandler = nil
+            handler(keyCode)
+            return .suppress
+        }
+
         // If this is a configured mod-tap key
         if let machine = machines[keyCode] {
             // Key was passed through on press (quick-tap or require-prior-idle),
@@ -153,6 +162,8 @@ final class TapHoldEngine {
     }
 
     func handleKeyUp(keyCode: UInt16, event: CGEvent, timestamp: TimeInterval) -> EventResult {
+        if keyCaptureHandler != nil { return .passThrough }
+
         if let machine = machines[keyCode] {
             // Key was passed through on press (require-prior-idle / quick-tap),
             // pass through release too without synthesizing

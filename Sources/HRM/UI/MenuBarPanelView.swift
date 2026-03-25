@@ -25,7 +25,10 @@ struct MenuBarPanelView: View {
                         set: { appState.configuration.keyBindings[index] = $0 }
                     ),
                     config: appState.configuration,
-                    onChanged: { appState.saveAndApply() }
+                    onChanged: { appState.saveAndApply() },
+                    onCaptureKey: { appState.captureNextKey($0) },
+                    onCancelCapture: { appState.cancelKeyCapture() },
+                    allBindings: appState.configuration.keyBindings
                 )
             }
         }
@@ -106,7 +109,10 @@ struct MenuBarPanelView: View {
                     set: { appState.configuration.keyBindings[index] = $0 }
                 ),
                 config: appState.configuration,
-                onChanged: { appState.saveAndApply() }
+                onChanged: { appState.saveAndApply() },
+                onCaptureKey: { appState.captureNextKey($0) },
+                onCancelCapture: { appState.cancelKeyCapture() },
+                allBindings: appState.configuration.keyBindings
             )
         }
     }

@@ -89,6 +89,12 @@ final class AppState: ObservableObject {
         isAccessibilityGranted = AccessibilityManager.isTrusted
     }
 
+    deinit {
+        if let observer = inputSourceObserver {
+            DistributedNotificationCenter.default().removeObserver(observer)
+        }
+    }
+
     func requestAccessibility() {
         AccessibilityManager.ensureAccessibility { [weak self] granted in
             Task { @MainActor in

@@ -4,13 +4,19 @@ enum KeyCodeLabel {
     /// Returns a human-readable label for a given keycode.
     /// Uses the current keyboard layout to translate keycodes to characters.
     static func label(for keyCode: UInt16) -> String {
-        guard let inputSource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue(),
-              let layoutDataRef = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData)
-        else {
+        let primarySource = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue()
+        let asciiSource = TISCopyCurrentASCIICapableKeyboardInputSource()?.takeRetainedValue()
+        let source = [primarySource, asciiSource].compactMap { $0 }.first {
+            TISGetInputSourceProperty($0, kTISPropertyUnicodeKeyLayoutData) != nil
+        }
+
+        guard let source else {
             return String(format: "0x%02X", keyCode)
         }
 
-        let layoutData = unsafeBitCast(layoutDataRef, to: CFData.self)
+        let layoutData = unsafeBitCast(
+            TISGetInputSourceProperty(source, kTISPropertyUnicodeKeyLayoutData), to: CFData.self
+        )
         let keyboardLayout = unsafeBitCast(CFDataGetBytePtr(layoutData), to: UnsafePointer<UCKeyboardLayout>.self)
 
         var deadKeyState: UInt32 = 0

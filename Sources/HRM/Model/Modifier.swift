@@ -66,7 +66,7 @@ enum Modifier: String, Codable, CaseIterable, Identifiable {
         case .control: .teal
         case .option:  .purple
         case .command: .blue
-        case .function:   .green
+        case .function: .green
         }
     }
 }

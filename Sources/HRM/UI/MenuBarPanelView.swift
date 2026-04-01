@@ -32,6 +32,7 @@ struct MenuBarPanelView: View {
             }
         }
         .frame(width: 400)
+        .onDisappear { selectedKeyIndex = nil }
     }
 
     // MARK: - Header

@@ -25,7 +25,7 @@ struct MenuBarPanelView: View {
                         updateBanner(version: version)
                     }
                     Divider()
-                    scrollContent
+                    content
                     Divider()
                     footer
                 }
@@ -94,18 +94,15 @@ struct MenuBarPanelView: View {
         .background(.quaternary)
     }
 
-    // MARK: - Scroll Content
+    // MARK: - Content
 
-    private var scrollContent: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                keyboardSection
-                Divider()
-                settingsSection
-            }
-            .padding()
+    private var content: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            keyboardSection
+            Divider()
+            settingsSection
         }
-        .fixedSize(horizontal: false, vertical: true)
+        .padding()
     }
 
     // MARK: - Keyboard Section

@@ -10,7 +10,7 @@ final class AppState: ObservableObject {
     private var engine: TapHoldEngine
     private var eventTapManager: EventTapManager?
     private var hasLaunched = false
-    private var inputSourceObserver: Any?
+    nonisolated(unsafe) private var inputSourceObserver: Any?
 
     var isEnabled: Bool {
         get { configuration.enabled }
@@ -44,8 +44,8 @@ final class AppState: ObservableObject {
             forName: .init("com.apple.Carbon.TISNotifySelectedKeyboardInputSourceChanged"),
             object: nil, queue: .main
         ) { [weak self] _ in
-            KeyCodeLabel.invalidateCache()
             Task { @MainActor in
+                KeyCodeLabel.invalidateCache()
                 self?.objectWillChange.send()
             }
         }

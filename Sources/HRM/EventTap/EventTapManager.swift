@@ -1,7 +1,7 @@
 import CoreGraphics
 import Foundation
 
-final class EventTapManager: TapHoldEngineDelegate {
+final class EventTapManager: @unchecked Sendable, TapHoldEngineDelegate {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var tapThread: Thread?

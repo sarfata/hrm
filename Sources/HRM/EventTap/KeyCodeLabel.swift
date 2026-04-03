@@ -1,5 +1,6 @@
 import Carbon.HIToolbox
 
+@MainActor
 enum KeyCodeLabel {
     private static var cache: [UInt16: String] = [:]
 

@@ -18,7 +18,7 @@ struct KeyBindingDetailView: View {
                 .buttonStyle(.plain)
                 .padding(.trailing, 4)
 
-                Text("Key: \(binding.label)")
+                Text("Key: \(KeyCodeLabel.label(for: binding.keyCode))")
                     .font(.headline)
 
                 Spacer()

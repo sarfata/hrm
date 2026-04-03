@@ -16,7 +16,7 @@ struct KeycapView: View {
 
     var body: some View {
         VStack(spacing: 1) {
-            Text(binding.label)
+            Text(KeyCodeLabel.label(for: binding.keyCode))
                 .font(.system(size: 13, weight: .medium, design: .rounded))
 
             Text(binding.enabled ? (binding.modifier?.symbol ?? "--") : "--")

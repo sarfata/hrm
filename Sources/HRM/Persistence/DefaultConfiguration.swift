@@ -7,7 +7,8 @@ enum DefaultConfiguration {
             bilateralFiltering: true,
             holdTriggerOnRelease: true,
             keyBindings: defaultKeyBindings,
-            selectedKeyboard: nil
+            selectedKeyboard: nil,
+            remapCapsLockToBackspace: false
         )
     }
 

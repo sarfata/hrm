@@ -71,6 +71,7 @@ final class AppState: ObservableObject {
         let manager = EventTapManager(engine: engine)
         manager.keyboardMonitor = keyboardMonitor
         manager.setSelectedKeyboard(configuration.selectedKeyboard)
+        manager.setRemapCapsLockToBackspace(configuration.remapCapsLockToBackspace)
         self.eventTapManager = manager
         if configuration.enabled {
             manager.start()
@@ -86,6 +87,7 @@ final class AppState: ObservableObject {
         try? store.save(configuration)
         engine.updateConfig(configuration)
         eventTapManager?.setSelectedKeyboard(configuration.selectedKeyboard)
+        eventTapManager?.setRemapCapsLockToBackspace(configuration.remapCapsLockToBackspace)
 
         if configuration.enabled {
             if eventTapManager?.isRunning == false {

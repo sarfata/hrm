@@ -127,6 +127,8 @@ struct MenuBarPanelView: View {
 
             settingToggle("Caps Lock → Backspace", isOn: capsLockRemapBinding)
 
+            settingToggle("Space Navigation (hjkl → Arrows)", isOn: spaceNavigationBinding)
+
             settingToggle("Bilateral Filtering", isOn: bilateralFilteringBinding)
 
             HStack {
@@ -217,6 +219,16 @@ struct MenuBarPanelView: View {
             get: { appState.configuration.remapCapsLockToBackspace },
             set: {
                 appState.configuration.remapCapsLockToBackspace = $0
+                appState.saveAndApply()
+            }
+        )
+    }
+
+    private var spaceNavigationBinding: Binding<Bool> {
+        Binding(
+            get: { appState.configuration.spaceNavigation },
+            set: {
+                appState.configuration.spaceNavigation = $0
                 appState.saveAndApply()
             }
         )

@@ -7,6 +7,7 @@ struct Configuration: Codable, Equatable {
     var keyBindings: [KeyBinding]
     var selectedKeyboard: KeyboardDevice?
     var remapCapsLockToBackspace: Bool
+    var spaceNavigation: Bool
 
     func effectiveQuickTapTerm(for binding: KeyBinding) -> Int {
         binding.quickTapTermMs ?? quickTapTermMs

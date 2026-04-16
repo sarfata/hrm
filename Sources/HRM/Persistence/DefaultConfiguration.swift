@@ -8,7 +8,8 @@ enum DefaultConfiguration {
             holdTriggerOnRelease: true,
             keyBindings: defaultKeyBindings,
             selectedKeyboard: nil,
-            remapCapsLockToBackspace: false
+            remapCapsLockToBackspace: false,
+            spaceNavigation: false
         )
     }
 

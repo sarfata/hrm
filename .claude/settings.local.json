@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/thomas/github/hrm -type f -name \"*.entitlements\" -o -name \"*.plist\" | xargs ls -la)",
+      "Bash(swift build:*)",
+      "Bash(swift test:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}

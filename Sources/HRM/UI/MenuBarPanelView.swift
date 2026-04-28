@@ -152,7 +152,7 @@ struct MenuBarPanelView: View {
                     .font(.body)
                 Spacer()
                 Picker("", selection: selectedKeyboardBinding) {
-                    Text("All Keyboards").tag(Int?.none)
+                    Text("All Layouts").tag(Int?.none)
                     ForEach(appState.keyboardMonitor.discoveredKeyboards) { keyboard in
                         Text(keyboard.name).tag(Int?.some(keyboard.keyboardType))
                     }

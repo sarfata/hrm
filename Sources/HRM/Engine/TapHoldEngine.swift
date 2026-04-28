@@ -54,6 +54,14 @@ final class TapHoldEngine {
             if passedThroughKeys.contains(keyCode) { return .passThrough }
             if sm.isUndecided || sm.state == .hold { return .suppress }
 
+            // If a real modifier is held (e.g. Cmd+Space for Raycast),
+            // pass through immediately — don't enter the undecided state.
+            let realFlags = event.flags.intersection(Self.physicalModifierMask).subtracting(syntheticModifierFlags)
+            if !realFlags.isEmpty {
+                passedThroughKeys.insert(keyCode)
+                return .passThrough
+            }
+
             let action = sm.onPress(at: timestamp)
             if action == .resolvedTap {
                 passedThroughKeys.insert(keyCode)
